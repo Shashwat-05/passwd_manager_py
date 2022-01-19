@@ -1,6 +1,5 @@
 # Password Manager
 
-
 1. **install dependencies first**
 
 `pip install -r requirement.txt`
@@ -14,3 +13,5 @@
 2. **start the application**
 
 `python starter.py`
+
+**pip3 and python3 for linux**
