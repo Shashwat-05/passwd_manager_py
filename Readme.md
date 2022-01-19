@@ -13,4 +13,4 @@
 
 2. **start the application**
 
-`python3 starter.py`
+`python starter.py`
