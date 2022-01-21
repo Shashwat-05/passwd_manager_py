@@ -4,20 +4,21 @@ import getpass
 from os.path import exists
 import yaml
 from os import system
+import sys
 
 def clean_screen():
-    try:
+    if sys.platform == 'linux':  #for linux
         system('clear')
-    except:
+    else:                        #for win
         system('cls')
 
-def key_generator():
+def key_generator():             #will generate new keys
     key = Fernet.generate_key()
     with open("refKey.txt", "wb") as f:
         f.write(key)
     return key
 
-def credentials_feeder():
+def credentials_feeder():         #will insert new credentials in yaml file
     print()
     user = input('enter username or client name : ')
     passwd = getpass.getpass(prompt='enter the password : ')
@@ -31,7 +32,8 @@ def credentials_feeder():
     else:
         key = key_generator()
 
-
+#password encryption !!
+  
     refKey = Fernet(key)
     mypwdbyt = bytes(passwd, 'utf-8') 
     encryptedPWD = refKey.encrypt(mypwdbyt)
@@ -42,7 +44,7 @@ def credentials_feeder():
     print('credentials updated...!!')
 
 
-def pass_fetcher():
+def pass_fetcher():                #will fetch the credentials
     if exists('refKey.txt'):
         user = input('enter the user\'s password to fetch : ')
 
@@ -56,6 +58,8 @@ def pass_fetcher():
         with open('refKey.txt') as f:
             refkey = ''.join(f.readlines())
             refkey_bytes = bytes(refkey,'utf-8')
+
+   #password decryption !!
 
         keyy = Fernet(refkey_bytes)
         password = keyy.decrypt(en_pass_b)
